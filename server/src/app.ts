@@ -5,8 +5,11 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
+import MongoSanitize from 'express-mongo-sanitize'
 
 import  {metricsRouter, responseTimeHistogram, totalReqCounter } from './utils/metrics'
+import userRoute from './routes/user.route'
+import ErrorMiddleware from './middleware/ErrorMiddleware'
 
 dotenv.config() 
 export const app = express()
@@ -17,6 +20,7 @@ app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
 app.use(cookieParser())
+app.use(MongoSanitize())
 
 //--------Routes--------\\
 app.use(responseTime((req:Request, res:Response, time:number) => {
@@ -29,3 +33,7 @@ app.use(responseTime((req:Request, res:Response, time:number) => {
     .observe(time)
 }))
 app.use(metricsRouter)
+app.use('/api/v1/user', userRoute)
+
+
+app.use(ErrorMiddleware)
