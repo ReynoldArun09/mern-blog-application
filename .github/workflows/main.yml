@@ -14,10 +14,7 @@ jobs:
         with:
           node-version: '18.18.0'
       - run: cd server
-<<<<<<< HEAD
-=======
       - run: npm init -y
->>>>>>> 5c9d61a72c6817e0683322cb6353c52e43ac9cba
       - run: npm install
       - run: npm run test
           
