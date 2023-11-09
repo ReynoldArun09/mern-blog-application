@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+      target: development
+    volumes:
+      - ./server:/app/server
+      - /app/server/node_modules
+    ports:
+      - 4000:4000
+    command: npm run dev
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+      target: development
+    volumes:
+      - ./client:/app/client
+      - /app/client/node_modules
+    ports:
+      - 5173:5173
+    command: npm run dev
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - /server/prometheus.yml:/server/prometheus.yml
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - 3000:3000
+
+  loki:
+    image: grafana/loki
+    ports:
+      - 3100:3100
