@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { IUserModel } from '../helper/interface';
 
+
 const userSchema = new mongoose.Schema<IUserModel>({
   username: {
     type: String,

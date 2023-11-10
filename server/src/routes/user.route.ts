@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as userHandler from '../handlers/user.handler';
 import ValidateMiddleware from '../middleware/ValidateMiddleware';
-import { RegisterSchema } from '../utils/schemas/ValidationSchemas';
+import { LoginSchema, RegisterSchema } from '../utils/schemas/ValidationSchemas';
 
 const router = Router();
 
@@ -10,5 +10,13 @@ router.post(
   ValidateMiddleware(RegisterSchema),
   userHandler.RegisterHandler,
 );
+
+router.post(
+  '/login-user',
+  ValidateMiddleware(LoginSchema),
+  userHandler.LoginHandler,
+)
+
+router.get('/logout-user', userHandler.LogoutHandler)
 
 export default router;

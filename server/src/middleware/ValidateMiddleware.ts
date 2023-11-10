@@ -8,6 +8,7 @@ const ValidateMiddleware =
       await Schema.parseAsync({
         body: req.body,
       });
+      next()
     } catch (error) {
       next(error);
     }
