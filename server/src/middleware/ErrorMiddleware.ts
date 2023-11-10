@@ -8,13 +8,13 @@ const ErrorMiddleware = (
   next: NextFunction
 ) => {
   if (error instanceof ZodError) {
-    return res
+    res
       .status(400)
       .json({ success: false, error: error.flatten().fieldErrors });
   }
 
   const statusCode = error.statusCode ?? 500;
-  return res.status(statusCode).json({
+  res.status(statusCode).json({
     success: false,
     error: error.message,
   });

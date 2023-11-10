@@ -11,8 +11,8 @@ export enum HttpStatusCode {
 export enum MESSAGES {
   USER_ALREADY_EXIST = 'Username/Email is already in use',
   USER_REGISTER_SUCCESS = 'User Registered successfully',
-  INCORRECT_EMAIL = 'Incorrect email',
-  INCORRECT_PASSWORD = 'Incorrect password',
+  INCORRECT_EMAIL = 'Incorrect Email/Password',
+  INCORRECT_PASSWORD = 'Incorrect Email/password',
   USER_LOGIN_SUCCESS = 'User Logged in successfully',
   USER_LOGOUT = 'User logged out successfully'
 }
