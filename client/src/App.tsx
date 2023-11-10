@@ -42,8 +42,8 @@ export default function App() {
           element={isLogged ? <CreatePage /> : <Navigate to="/login" />}
         />
         <Route
-          path="/blog/:id"
-          element={isLogged ? <SinglePost /> : <Navigate to="/login" />}
+          path="/posts/:id"
+          element={<SinglePost />}
         />
         <Route
           path="/login"

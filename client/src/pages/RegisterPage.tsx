@@ -30,7 +30,6 @@ export default function RegisterPage() {
         "http://localhost:4000/api/v1/user/register-user",
         values
       );
-      console.log(response)
       if (response.status === 201 && response.data.success === true) {
         toast({
           variant: "default",

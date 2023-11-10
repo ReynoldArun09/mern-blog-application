@@ -7,21 +7,39 @@ import { ImBlog } from "react-icons/im";
 import Theme from "./ThemeToggle/Theme";
 import CustomMenuBar from "@/components/custom/CustomMenuBar";
 import CustomAvatar from "@/components/custom/CustomAvatar";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authAtom } from "@/atoms/authAtom";
+import { useEffect, useState } from "react";
+import Axios from "@/axios/Axios";
+import { postAtom } from "@/atoms/postAtom";
 
 export default function SiteHeader() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const { isLogged } = useRecoilValue(authAtom);
+  const setPostData = useSetRecoilState(postAtom);
 
-  const {isLogged} = useRecoilValue(authAtom)
+  useEffect(() => {
+    const fetchSearchPost = async () => {
+      if (searchTerm === "") {
+        const response = await Axios.get(`post/all`);
+        setPostData(response.data.data);
+        return;
+      } else {
+        const response = await Axios.get(`post/search/${searchTerm}`);
+        setPostData(response.data.data);
+      }
+    };
+    fetchSearchPost();
+  }, [searchTerm]);
 
   const handleLogin = () => {
-    navigate('/login')
+    navigate("/login");
   };
 
   const handleRegister = () => {
-   navigate('/register')
+    navigate("/register");
   };
 
   return (
@@ -38,6 +56,8 @@ export default function SiteHeader() {
             <Input
               placeholder="Search a post..."
               className="border-none outline-none font-bold tracking-wide"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <AiOutlineSearch size={20} />
           </div>

@@ -21,7 +21,10 @@ const postSchema = new mongoose.Schema<IPostModel>({
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'
-    }]
+    }],
+    categories: {
+      type: []
+    }
   },{ timestamps: true });
 
 export default mongoose.model<IPostModel>("Post", postSchema);
