@@ -13,7 +13,7 @@ export default function HomePage() {
   const PostData = useRecoilValue(postAtom)
   const setPostData = useSetRecoilState(postAtom)
 
-  // destructuring issue fix later
+ 
   const { isLoading} = useQuery({
     queryKey: ["blogsData"],
     queryFn: async() => {

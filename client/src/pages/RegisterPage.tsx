@@ -36,7 +36,7 @@ export default function RegisterPage() {
           title: "Welcome!!",
           description: "You have been registered successfully",
         });
-        navigate("/");
+        navigate("/login");
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
