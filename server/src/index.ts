@@ -1,6 +1,6 @@
 import { app } from './app';
 import MongoConnection from './database/MongoConnection';
-import { logger } from './utils/logger';
+
 
 const port = process.env.PORT || 3001;
 const nodeEnv = process.env.NODE_ENV;
@@ -15,13 +15,13 @@ app.listen(port, () => {
 
 
 process.on('uncaughtException', (err: Error) => {
-  logger.error(`${err.message}`);
-  logger.error('Shutting down server to handle uncaughtException error.');
+  console.log(`${err.message}`);
+  console.log('Shutting down server to handle uncaughtException error.');
   process.exit(1);
 });
 
 process.on('unhandledRejection', (err: Error) => {
-  logger.error(`${err.message}`);
-  logger.error('Shutting down server to handle unhandledRejection error.');
+  console.log(`${err.message}`);
+  console.log('Shutting down server to handle unhandledRejection error.');
   process.exit(1);
 });
