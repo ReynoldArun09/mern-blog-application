@@ -5,6 +5,7 @@ export type postType = {
     desc: string;
     updatedAt: Date;
     userId:string
+    image: string
   };
   
 

@@ -2,7 +2,7 @@ import AsyncWrapper from '../helper/AsyncWrapper';
 import commentModel from '../models/comment.model';
 import postModel from '../models/post.model';
 import { Request, Response } from 'express';
-import path from 'path';
+
 
 export const GetAllPosts = AsyncWrapper(async (req: Request, res: Response) => {
   const posts = await postModel.find({});
@@ -10,13 +10,12 @@ export const GetAllPosts = AsyncWrapper(async (req: Request, res: Response) => {
 });
 
 export const CreatePost = AsyncWrapper(async (req: Request, res: Response) => {
-  const { title, userId, username, desc, cats } = req.body;
-  const filename = req?.file?.filename;
-  const fileUrl = path.join(filename!);
+  const { title, userId, username, desc, cats, image } = req.body;
+
   await postModel.create({
     title,
     desc,
-    image: fileUrl,
+    image: image,
     userId,
     username,
     categories:cats

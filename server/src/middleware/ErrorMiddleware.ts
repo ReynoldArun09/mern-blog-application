@@ -1,11 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { ErrorRequestHandler} from "express";
 import { ZodError } from "zod";
 
-const ErrorMiddleware = (
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
+const ErrorMiddleware:ErrorRequestHandler = (
+  error,
+  req,
+  res,
 ) => {
   if (error instanceof ZodError) {
     res

@@ -36,6 +36,7 @@ export default function PostDetails() {
         comment,
         userId: isLogged?.userId,
         username: isLogged?.username,
+        postId
       });
     },
     onSuccess: async () => {
@@ -58,6 +59,7 @@ export default function PostDetails() {
       return;
     }
     await commentadd()
+    setComment("")
   }
 
 
@@ -86,24 +88,23 @@ export default function PostDetails() {
   }
 
 
-  return (
-    <section className="px-8 md:px-[200px] text-gray-400 font-bold mt-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold md:text-3xl break-words">
-          {singlePost?.data.data.title}
-        </h1>
 
+
+  return (
+    <section className="px-10 container mx-auto text-gray-400 font-bold mt-8">
+      <div>
+        <p className="text-2xl break-words">{singlePost?.data.data.title}</p>
+      </div>
+      <div className="flex items-center justify-between mt-2 md:mt-4">
+        <h2 className="capitalize text-lg">Posted By: {singlePost?.data.data.username}</h2>
+        <div className="flex gap-5">
         {singlePost?.data.data.userId === isLogged?.userId ? (
-          <div className="flex items-center justify-center space-x-2">
+          <div>
             <MdDelete size={25} onClick={handleDelete} />
           </div>
         ) : (
           ""
         )}
-      </div>
-      <div className="flex items-center justify-between mt-2 md:mt-4">
-        <h2 className="capitalize">{singlePost?.data.data.username}</h2>
-        <div className="flex gap-5">
           <p>
             {new Date(singlePost?.data.data.updatedAt).toString().slice(0, 15)}
           </p>
@@ -112,9 +113,9 @@ export default function PostDetails() {
           </p>
         </div>
       </div>
-      <img src="/imagex.jpg" alt="image" className="w-full mx-auto mt-8" />
+      <img src={singlePost?.data.data.image} alt="image" className="w-full mx-auto mt-8" />
       <p className="mx-auto mt-8 break-words">{singlePost?.data.data?.desc}</p>
-      <div className="flex items-center mt-8 space-x-4 font-semibold">
+      <div className="flex items-center flex-wrap space-y-3 mt-8 space-x-4 font-semibold">
         <p>Categories:</p>
         {singlePost?.data.data.categories.map((category: string, k: number) => (
           <div className="flex mx-2 items-center space-x-2" key={k}>

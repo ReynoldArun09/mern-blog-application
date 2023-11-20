@@ -25,6 +25,7 @@ Docker
 Moongose
 Jest
 Multer
+cloudinary
 
 ## Features
 

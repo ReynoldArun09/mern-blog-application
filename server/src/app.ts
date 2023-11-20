@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
 import MongoSanitize from 'express-mongo-sanitize'
 
-import  {metricsRouter, responseTimeHistogram, totalReqCounter } from './utils/metrics'
+import {metricsRouter, responseTimeHistogram, totalReqCounter } from './utils/metrics'
 import userRoute from './routes/user.route'
 import postRoute from './routes/post.route'
 import commentRoute from './routes/comment.route'

@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { ICommentModel } from "../helper/interface";
 
-
-
 const commentSchema = new mongoose.Schema<ICommentModel>(
   {
     comment: {

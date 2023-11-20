@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 const AsyncWrapper =
-  (fn: any) => async (req: Request, res: Response, next: NextFunction) => {
+  (fn: CallableFunction) => async (req: Request, res: Response, next: NextFunction) => {
     try {
       await fn(req, res, next);
     } catch (error) {

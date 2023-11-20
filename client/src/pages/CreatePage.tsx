@@ -9,30 +9,44 @@ import { ImCross } from "react-icons/im";
 import Axios from "@/axios/Axios";
 
 export default function CreatePostPage() {
-  const { isLogged } = useRecoilValue(authAtom) as any;
-  const [image, setImage] = useState<any>();
+  const { isLogged } = useRecoilValue(authAtom) as any
+  const [image, setImage] = useState<any>(null);
   const [title, setTile] = useState("");
   const [desc, setDesc] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [cat, setCat] = useState("");
-  const [cats, setCats] = useState([]) as any
+  const [cat, setCat] = useState("")
+  const [cats, setCats] = useState([])
 
   const handleImage = (e: any) => {
     const file = e.target.files[0];
     setImage(file);
   };
+  const preset = import.meta.env.VITE_PRESET_CLOUD 
+  const cloudName = import.meta.env.VITE_CLOUD_NAME
+
+  const uploadImage = async () => {
+    const data = new FormData();
+    data.append('file', image);
+    data.append('upload_preset', `${preset}`);
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method:'POST',
+        body: data,
+      })
+      const urlData = response.json();     
+      return urlData;
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "There was a problem with your request.",
+      })
+    }
+  }
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newForm = new FormData();
-    newForm.append("file", image);
-    newForm.append("title", title);
-    newForm.append("desc", desc);
-    newForm.append('cats', cats)
-    newForm.append("username", isLogged.username);
-    newForm.append("userId", isLogged.userId);
-
+    e.preventDefault()
     if (title === "" || title.length < 4) {
       toast({
         variant: "destructive",
@@ -41,24 +55,32 @@ export default function CreatePostPage() {
       return;
     }
 
-    if (desc === "" || desc.length < 30) {
+    if (desc === "" || desc.length < 10) {
       toast({
         variant: "destructive",
-        title: "Description must be 30 or more charc",
+        title: "Description must be 10 or more charc",
       });
       return;
     }
 
     try {
-      const response = await Axios.post("post/create", newForm, {
+      const url = await uploadImage()
+      const response = await Axios.post("post/create", {
+        title,
+        desc,
+        cats,
+        username: isLogged.username,
+        userId: isLogged.userId,
+        image:url.url
+      }, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type' : 'application/json'
         },
       });
       if (response.status === 201 && response.data.success === true) {
         toast({
           variant: "default",
-          title: "Welcome!!",
+          title: "Success!",
           description: "Post Created successfully",
         });
         navigate("/");
