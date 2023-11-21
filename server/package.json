@@ -10,7 +10,7 @@
     "test": "jest",
     "build": "tsc",
     "dev": "ts-node-dev --poll src/index.ts",
-    "start": "rimraf ./build && npm run build && node build/index.js",
+    "start": "node build/index.js",
     "prepare": "cd ../ && husky install ./server/.husky"
   },
   "jest": {
