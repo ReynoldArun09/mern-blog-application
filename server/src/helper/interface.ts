@@ -6,6 +6,7 @@ export interface IUserModel {
   password: string;
   email: string;
   ComparePassword: (password: string) => Promise<boolean>;
+  avatar: string
 }
 
 export interface IPostModel {

@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema<IUserModel>({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String,
+  }
 });
 
 userSchema.pre('save', async function (next) {

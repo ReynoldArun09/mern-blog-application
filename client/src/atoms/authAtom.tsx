@@ -1,18 +1,11 @@
-import {atom} from 'recoil'
+import { ValueType } from "@/utils/types";
+import { atom } from "recoil";
 
-export type UserType = {
-    username: string;
-    userId: string;
-    token: string;
-  };
-  
-  export type ValueType = {
-    isLogged: null | UserType;
-  };
+
 
 export const authAtom = atom<ValueType>({
-    key: 'authState',
-    default: {
-        isLogged: null,
-    }
-})
+  key: "authState",
+  default: {
+    isLogged: null,
+  },
+});

@@ -1,93 +1,47 @@
 import { Button, Input, Badge } from "@/components/ui";
 import { useToast } from "@/components/ui/use-toast";
 import { MdDelete } from "react-icons/md";
-import Axios from "@/axios/Axios";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import Comment from "@/components/app/Comment";
-import { useNavigate } from "react-router-dom";
 import { authAtom } from "@/atoms/authAtom";
-import { IComment } from "@/utils/interface";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+import {
+  DeletePost,
+  FetchComments,
+  FetchSingleBlog,
+  PostComment,
+} from "@/apis";
+import { TComment } from "@/utils/types";
 
 export default function PostDetails() {
   const { isLogged } = useRecoilValue(authAtom);
   const [comment, setComment] = useState<string>("");
   const postId = useParams<string>().id;
-  const navigate = useNavigate();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
+  const { singlePost } = FetchSingleBlog(postId);
+  const { comments } = FetchComments(postId);
+  const { commentadd } = PostComment();
+  const { deletePost } = DeletePost();
 
-  const { data: singlePost } = useQuery({
-    queryKey: ["singlePost", postId],
-    queryFn: () => Axios.get(`/post/single/${postId}`),
-    refetchOnWindowFocus: false,
-  });
-
-  const { data: comments } = useQuery({
-    queryKey: ["getcomment", postId],
-    queryFn: () => Axios.get(`/comment/all/${postId}`),
-  });
-
-  const {mutateAsync:commentadd} = useMutation({
-    mutationFn: () => {
-      return Axios.post("comment/create", {
-        comment,
-        userId: isLogged?.userId,
-        username: isLogged?.username,
-        postId
-      });
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({queryKey: ['getcomment']})
-    },
-    onError: () => {
-       toast({
-        "variant": "destructive",
-        "description": "Something went wrong!!"
-      })
-    }
-  });
-
-  const handleComment = async() => {
-    if(comment === '' || comment.length < 4) {
+  const handleComment = async () => {
+    if (comment === "" || comment.length < 4) {
       toast({
-        "variant": "destructive",
-        "description": "Minimum 4 charc.."
-      })
+        variant: "destructive",
+        description: "Minimum 4 charc..",
+      });
       return;
     }
-    await commentadd()
-    setComment("")
-  }
-
-
-  const {mutateAsync:deletePost} = useMutation({
-    mutationFn: () => {
-      return Axios.delete(`post/delete/${postId}`)
-    },
-    onSuccess: () => {
-      toast({
-        "variant": "default",
-        "description": "Post deleted Successfully!!"
-      })
-      navigate('/')
-    },
-    onError: () => {
-       toast({
-        "variant": "destructive",
-        "description": "Something went wrong!!"
-      })
-    }
-  });
-
-  
-  const handleDelete = async() => {
-    await deletePost()
-  }
-
-
+    const data = {
+      postId,
+      userId: isLogged?.userId,
+      username: isLogged?.username,
+      comment,
+    };
+    await commentadd(data);
+    setComment("");
+  };
 
 
   return (
@@ -96,15 +50,17 @@ export default function PostDetails() {
         <p className="text-2xl break-words">{singlePost?.data.data.title}</p>
       </div>
       <div className="flex items-center justify-between mt-2 md:mt-4">
-        <h2 className="capitalize text-lg">Posted By: {singlePost?.data.data.username}</h2>
+        <h2 className="capitalize text-lg">
+          Posted By: {singlePost?.data.data.username}
+        </h2>
         <div className="flex gap-5">
-        {singlePost?.data.data.userId === isLogged?.userId ? (
-          <div>
-            <MdDelete size={25} onClick={handleDelete} />
-          </div>
-        ) : (
-          ""
-        )}
+          {singlePost?.data.data.userId === isLogged?.userId ? (
+            <div>
+              <MdDelete size={25} onClick={() => deletePost(postId)} />
+            </div>
+          ) : (
+            ""
+          )}
           <p>
             {new Date(singlePost?.data.data.updatedAt).toString().slice(0, 15)}
           </p>
@@ -113,7 +69,11 @@ export default function PostDetails() {
           </p>
         </div>
       </div>
-      <img src={singlePost?.data.data.image} alt="image" className="w-full mx-auto mt-8" />
+      <img
+        src={singlePost?.data.data.image}
+        alt="image"
+        className="w-full mx-auto mt-8"
+      />
       <p className="mx-auto mt-8 break-words">{singlePost?.data.data?.desc}</p>
       <div className="flex items-center flex-wrap space-y-3 mt-8 space-x-4 font-semibold">
         <p>Categories:</p>
@@ -125,7 +85,7 @@ export default function PostDetails() {
       </div>
       <div className="flex flex-col mt-4">
         <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
-        {comments?.data.data?.map((comment: IComment) => (
+        {comments?.data.data?.map((comment: TComment) => (
           <Comment data={comment} key={comment?._id} />
         ))}
       </div>

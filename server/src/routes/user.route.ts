@@ -18,5 +18,6 @@ router.post(
 )
 
 router.get('/logout-user', userHandler.LogoutHandler)
+router.put('/update-user/:id', userHandler.UpdateUser)
 
 export default router;

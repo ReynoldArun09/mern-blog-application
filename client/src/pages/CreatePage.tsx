@@ -16,7 +16,9 @@ export default function CreatePostPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [cat, setCat] = useState("")
-  const [cats, setCats] = useState([])
+  const [cats, setCats] = useState<string[]>([])
+
+
 
   const handleImage = (e: any) => {
     const file = e.target.files[0];
@@ -109,10 +111,7 @@ export default function CreatePostPage() {
 
   const addCategory = () => {
     const updatedCats = [...cats];
-    if(cat === '') {
-      return;
-    }
-    updatedCats.push(cat);
+    updatedCats.push(cat)
     setCat("");
     setCats(updatedCats);
   };

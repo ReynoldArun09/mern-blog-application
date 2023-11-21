@@ -1,13 +1,8 @@
-import { postType } from "@/utils/types";
-
-type PostType = {
-  post: postType
-};
+import { PostType } from "@/utils/types";
 
 export default function SitePosts({
   post: { username, desc, updatedAt, title, image },
 }: PostType) {
-  
   return (
     <section className="flex flex-col md:flex-row w-full gap-24 my-5">
       <div className="md:w-[35%] h-[250px] flex justify-center items-center">
@@ -29,7 +24,9 @@ export default function SitePosts({
           </div>
         </div>
         <div>
-          <p className="text-sm md:text-lg break-words">{desc.toString().slice(0, 350)}</p>
+          <p className="text-sm md:text-lg break-words">
+            {desc.toString().slice(0, 350)}
+          </p>
         </div>
       </div>
     </section>

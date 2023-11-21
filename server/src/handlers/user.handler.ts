@@ -52,6 +52,7 @@ export const LoginHandler = AsyncWrapper(
         token: accessToken,
         username: findUser.username,
         userId: findUser._id,
+        avatar: findUser.avatar
       },
     });
   },
@@ -69,3 +70,14 @@ export const LogoutHandler = AsyncWrapper(
       });
   },
 );
+
+export const UpdateUser = AsyncWrapper(async(req: Request, res: Response) => {
+    const {id} = req.params
+    const {username, avatar} = req.body
+    console.log(username, avatar)
+    await userModel.findByIdAndUpdate({_id:id}, {
+      username: username,
+      avatar: avatar
+    })
+    res.status(201).json({success: true, message: MESSAGES.USER_UPDATE})
+})

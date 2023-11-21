@@ -9,7 +9,8 @@ import axios, { AxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { ValueType, authAtom } from "@/atoms/authAtom";
+import {  authAtom } from "@/atoms/authAtom";
+import { ValueType } from "@/utils/types";
 
 export default function LoginPage() {
   const [viewEye, setViewEye] = useState<boolean>(false);
@@ -32,6 +33,7 @@ export default function LoginPage() {
         "http://localhost:4000/api/v1/user/login-user",
         values
       );
+      console.log(response.data.data)
       if (response.status === 200 && response.data.success === true) {
         sessionStorage.setItem('token', JSON.stringify(response.data.data))
         setAuthState({
@@ -39,6 +41,7 @@ export default function LoginPage() {
             username: response.data.data.username,
             token: response.data.data.token,
             userId: response.data.data.userId,
+            avatar: response.data.data.avatar
           },
         });
         toast({

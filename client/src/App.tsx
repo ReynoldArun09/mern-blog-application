@@ -4,11 +4,12 @@ import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
 import SinglePost from "./pages/SinglePost";
 import { useRecoilValue } from "recoil";
-import { ValueType, authAtom } from "./atoms/authAtom";
+import { authAtom } from "./atoms/authAtom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
+import { ValueType } from "./utils/types";
 
 
 export default function App() {
@@ -28,9 +29,11 @@ export default function App() {
           username: getSession.username,
           token: getSession.token,
           userId: getSession.userId,
+          avatar: getSession.avatar
         },
       });
     }
+  
   }, []);
 
   return (

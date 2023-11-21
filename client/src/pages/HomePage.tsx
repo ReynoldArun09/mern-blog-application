@@ -1,30 +1,16 @@
 import { authAtom } from "@/atoms/authAtom";
 import SitePosts from "@/components/app/SitePosts";
 import CustomSkeleton from "@/components/custom/CustomSkeleton";
-import { useQuery } from "@tanstack/react-query";
-import Axios from "@/axios/Axios";
 import { Link } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { postType } from "@/utils/types";
+import { useRecoilValue } from "recoil";
+import { ValueType, postType } from "@/utils/types";
 import { postAtom } from "@/atoms/postAtom";
+import { FetchBlogs } from "@/apis";
 
 export default function HomePage() {
-  const authState = useRecoilValue(authAtom);
-  const PostData = useRecoilValue(postAtom)
-  const setPostData = useSetRecoilState(postAtom)
-
- 
-  const { isLoading} = useQuery({
-    queryKey: ["blogsData"],
-    queryFn: async() => {
-      const data = await Axios.get("post/all")
-      setPostData(data.data.data)
-      return data
-    },
-    refetchOnWindowFocus: false,
-  });
-  
-
+  const authState = useRecoilValue<ValueType>(authAtom);
+  const PostData = useRecoilValue<postType[]>(postAtom);
+  const { isLoading } = FetchBlogs();
 
   if (isLoading) {
     return [...Array(5)].map((_, i: number) => <CustomSkeleton key={i} />);

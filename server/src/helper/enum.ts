@@ -14,5 +14,6 @@ export enum MESSAGES {
   INCORRECT_EMAIL = 'Incorrect Email/Password',
   INCORRECT_PASSWORD = 'Incorrect Email/password',
   USER_LOGIN_SUCCESS = 'User Logged in successfully',
-  USER_LOGOUT = 'User logged out successfully'
+  USER_LOGOUT = 'User logged out successfully',
+  USER_UPDATE = 'User updated successfully'
 }
