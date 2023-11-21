@@ -8,7 +8,7 @@
     "prettier:fix": "prettier src --write",
     "lint": "eslint src",
     "test": "jest",
-    "build": "npx tsc",
+    "build": "tsc",
     "dev": "ts-node-dev --poll src/index.ts",
     "start": "rimraf ./build && npm run build && node build/index.js",
     "prepare": "cd ../ && husky install ./server/.husky"
