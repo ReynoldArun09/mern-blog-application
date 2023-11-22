@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { ICommentModel } from "../helper/interface";
+import mongoose from 'mongoose';
+import { ICommentModel } from '../helper/interface';
 
 const commentSchema = new mongoose.Schema<ICommentModel>(
   {
@@ -11,15 +11,14 @@ const commentSchema = new mongoose.Schema<ICommentModel>(
     },
     postId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
+      ref: 'Post',
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-
-export default mongoose.model<ICommentModel>('Comment', commentSchema)
+export default mongoose.model<ICommentModel>('Comment', commentSchema);

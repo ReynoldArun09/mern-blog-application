@@ -6,7 +6,7 @@ export interface IUserModel {
   password: string;
   email: string;
   ComparePassword: (password: string) => Promise<boolean>;
-  avatar: string
+  avatar: string;
 }
 
 export interface IPostModel {
@@ -17,7 +17,7 @@ export interface IPostModel {
   file?: string;
   userId: string;
   username: string;
-  categories: []
+  categories: [];
 }
 
 export interface ICommentModel {
@@ -26,4 +26,3 @@ export interface ICommentModel {
   userId: ObjectId;
   username: string;
 }
-

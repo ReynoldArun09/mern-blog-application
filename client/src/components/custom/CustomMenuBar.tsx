@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-
+import { AxiosError } from "axios";
+import Axios from '@/axios/Axios'
 import EditProfile from "../app/EditProfile";
 import {
   Menubar,
@@ -21,9 +21,7 @@ export default function CustomMenuBar({
   const setAuthState = useSetRecoilState(authAtom);
   const handleLogout = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/user/logout-user"
-      );
+      const response = await Axios.get("user/logout-user");
       if (response.status === 200 && response.data.success === true) {
         setAuthState({
           isLogged: null

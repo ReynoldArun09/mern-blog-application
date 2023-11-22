@@ -14,28 +14,29 @@ export const DeleteComment = AsyncWrapper(
   async (req: Request, res: Response) => {
     const { postId, commentId } = req.params;
     await commentModel.findByIdAndDelete(commentId);
-    await postModel.findByIdAndUpdate(postId, { $pull: { comments: commentId } });
+    await postModel.findByIdAndUpdate(postId, {
+      $pull: { comments: commentId },
+    });
     return res
       .status(200)
-      .json({ success: true, message: "Comment Deleted!!" });
-  }
+      .json({ success: true, message: 'Comment Deleted!!' });
+  },
 );
 
 export const CreateComment = AsyncWrapper(
-  async (
-    req: Request,
-    res: Response
-  ) => {
+  async (req: Request, res: Response) => {
     const { comment, postId, username, userId } = req.body;
     const comments = await commentModel.create({
       comment,
       postId,
       username,
-      userId
+      userId,
     });
-    await postModel.findByIdAndUpdate(postId, { $push: { comments: comments._id } });
+    await postModel.findByIdAndUpdate(postId, {
+      $push: { comments: comments._id },
+    });
     return res
       .status(201)
-      .json({ success: true, message: "Comment created Successfully!" });
-  }
+      .json({ success: true, message: 'Comment created Successfully!' });
+  },
 );

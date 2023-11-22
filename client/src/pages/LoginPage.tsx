@@ -29,11 +29,9 @@ export default function LoginPage() {
   ) => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/user/login-user",
+      const response = await axios.post(import.meta.env.VITE_NODE_SERVER + "user/login-user",
         values
       );
-      console.log(response.data.data)
       if (response.status === 200 && response.data.success === true) {
         sessionStorage.setItem('token', JSON.stringify(response.data.data))
         setAuthState({

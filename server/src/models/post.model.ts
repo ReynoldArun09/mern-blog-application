@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import { IPostModel } from "../helper/interface";
+import mongoose from 'mongoose';
+import { IPostModel } from '../helper/interface';
 
-
-const postSchema = new mongoose.Schema<IPostModel>({
+const postSchema = new mongoose.Schema<IPostModel>(
+  {
     title: {
       type: String,
     },
@@ -10,21 +10,25 @@ const postSchema = new mongoose.Schema<IPostModel>({
       type: String,
     },
     image: {
-      type: String
+      type: String,
     },
     username: {
-      type: String
+      type: String,
     },
     userId: {
       type: String,
     },
-    comments: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment'
-    }],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
     categories: {
-      type: []
-    }
-  },{ timestamps: true });
+      type: [],
+    },
+  },
+  { timestamps: true },
+);
 
-export default mongoose.model<IPostModel>("Post", postSchema);
+export default mongoose.model<IPostModel>('Post', postSchema);

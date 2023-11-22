@@ -27,7 +27,7 @@ export default function RegisterPage() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/api/v1/user/register-user",
+        import.meta.env.VITE_NODE_SERVER + "user/register-user",
         values
       );
       if (response.status === 201 && response.data.success === true) {

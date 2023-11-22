@@ -1,10 +1,9 @@
 import mongoose, { MongooseError } from 'mongoose';
 
-
 const MONGO_URL = process.env.MONGO_DB_URL || '';
 
 async function MongoConnection() {
- await mongoose
+  await mongoose
     .connect(MONGO_URL)
     .then((success) => {
       console.log(`[Mongo]: Mongo Connected ${success.connection.host}`);

@@ -1,4 +1,4 @@
-import { HttpStatusCode } from './enum'
+import { HttpStatusCode } from './enum';
 
 class AppError extends Error {
   statusCode: HttpStatusCode;
