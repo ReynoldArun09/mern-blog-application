@@ -24,7 +24,7 @@ Blog app built with mern stack
 - [x] Light/dark mode toggle
 - [x] Login/Register
 - [x] Create Blog post
-- [x] Create comment
+- [x] Add comment
 - [x] Delete comment
 - [x] Search blogs
 - [x] Edit profile
