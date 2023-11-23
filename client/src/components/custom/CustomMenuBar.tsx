@@ -9,8 +9,10 @@ import {
   MenubarTrigger,
 } from "../ui/menubar";
 import { useToast } from "../ui/use-toast";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authAtom } from "@/atoms/authAtom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CustomMenuBar({
   children,
@@ -18,7 +20,9 @@ export default function CustomMenuBar({
   children: React.ReactNode;
 }) {
   const { toast } = useToast();
+  const navigate = useNavigate()
   const setAuthState = useSetRecoilState(authAtom);
+  const { isLogged } = useRecoilValue(authAtom);
   const handleLogout = async () => {
     try {
       const response = await Axios.get("user/logout-user");
@@ -51,13 +55,29 @@ export default function CustomMenuBar({
     <Menubar className="border-none">
       <MenubarMenu>
         <MenubarTrigger>{children}</MenubarTrigger>
-        <MenubarContent>
-          <EditProfile>Edit Profile</EditProfile>
-          <MenubarSeparator />
-          <button className="cursor-pointer" onClick={handleLogout}>
-            Logout
-          </button>
-        </MenubarContent>
+        {isLogged ? (
+          <MenubarContent>
+            <EditProfile>Edit Profile</EditProfile>
+            <MenubarSeparator />
+            <button className="cursor-pointer" onClick={handleLogout}>
+              Logout
+            </button>
+          </MenubarContent>
+        ) : (
+          <MenubarContent className="mt-3 sm:hidden">
+            <div className="flex flex-col items-start pl-5 space-y-2">
+            <button className="cursor-pointer" onClick={() => navigate('/write')}>
+              Write
+            </button>
+            <button className="cursor-pointer" onClick={() => navigate('/login')}>
+              Login
+            </button>
+            <button className="cursor-pointer" onClick={() => navigate('/register')}>
+              Register
+            </button>
+            </div>
+          </MenubarContent>
+        )}
       </MenubarMenu>
     </Menubar>
   );
