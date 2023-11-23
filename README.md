@@ -1,4 +1,4 @@
-# Project Title
+# MERN Blog app
 Blog app built with mern stack
 
 ## Tech Stack
