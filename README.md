@@ -10,7 +10,7 @@ Blog app built with mern stack
 
 ## 🔗 Links
 - Live: https://super-jelly-727c23.netlify.app/
-- Code: https://github.com/Beast-Rey/mern-blog-app
+- Code: https://github.com/Beast-Rey/MERN-blog-app
 
 ## Table of Contents
 
